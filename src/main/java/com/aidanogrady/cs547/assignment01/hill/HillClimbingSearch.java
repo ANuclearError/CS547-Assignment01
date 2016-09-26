@@ -2,6 +2,8 @@ package com.aidanogrady.cs547.assignment01.hill;
 
 import com.aidanogrady.cs547.assignment01.Search;
 
+import java.util.Properties;
+
 /**
  * Hill Climbing search operates by taking a random starting point in the search
  * space and using its fitness function to find neighboring solutions to
@@ -12,7 +14,7 @@ import com.aidanogrady.cs547.assignment01.Search;
  */
 public class HillClimbingSearch implements Search {
     @Override
-    public int search(String target) {
+    public int search(Properties properties) {
         return 0;
     }
 }

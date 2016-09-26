@@ -118,7 +118,7 @@ class Chromosome implements Comparable<Chromosome> {
      * Performs a crossover with another chromosome, resulting
      * @param parent the other parent in the crossover
      * @param index the index at which to split the parents
-     * @return
+     * @return crossover
      */
     Chromosome crossover(Chromosome parent, int index) {
         char[] arr = solution;

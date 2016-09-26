@@ -1,5 +1,7 @@
 package com.aidanogrady.cs547.assignment01;
 
+import java.util.Properties;
+
 /**
  * TODO: Add content
  *
@@ -7,5 +9,5 @@ package com.aidanogrady.cs547.assignment01;
  * @since 0.0
  */
 public interface Search {
-    int search(String target);
+    int search(Properties properties);
 }
