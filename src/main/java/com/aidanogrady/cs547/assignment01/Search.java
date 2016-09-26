@@ -10,4 +10,6 @@ import java.util.Properties;
  */
 public interface Search {
     int search(Properties properties);
+
+    int benchmark(Properties properties);
 }

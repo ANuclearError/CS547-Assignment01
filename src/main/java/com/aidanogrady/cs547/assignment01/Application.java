@@ -24,7 +24,7 @@ public class Application {
             try {
                 properties.load(new FileInputStream(args[0]));
                 Search search = new GeneticAlgorithmSearch();
-                search.search(properties);
+                search.benchmark(properties);
             } catch (IOException e) {
                 e.printStackTrace();
             }

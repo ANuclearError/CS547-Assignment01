@@ -17,4 +17,9 @@ public class HillClimbingSearch implements Search {
     public int search(Properties properties) {
         return 0;
     }
+
+    @Override
+    public int benchmark(Properties properties) {
+        return 0;
+    }
 }
