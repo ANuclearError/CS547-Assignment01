@@ -1,5 +1,6 @@
 package com.aidanogrady.cs547.assignment01.genetic;
 
+import com.aidanogrady.cs547.assignment01.Chromosome;
 import com.aidanogrady.cs547.assignment01.Search;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class GeneticAlgorithmSearch implements Search {
         String summary = "Generation " + i + ". ";
         summary += "Best: " + pop.getFittest() + "  Worst: " + pop.getLeastFit();
         summary += " Average: " + pop.getAverageFitness();
-        //LOGGER.info(summary);
+        LOGGER.debug(summary);
     }
 
     @Override

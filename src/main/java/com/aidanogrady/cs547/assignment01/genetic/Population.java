@@ -1,5 +1,7 @@
 package com.aidanogrady.cs547.assignment01.genetic;
 
+import com.aidanogrady.cs547.assignment01.Chromosome;
+
 import java.util.Arrays;
 import java.util.Random;
 

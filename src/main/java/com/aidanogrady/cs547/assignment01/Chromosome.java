@@ -1,4 +1,4 @@
-package com.aidanogrady.cs547.assignment01.genetic;
+package com.aidanogrady.cs547.assignment01;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Aidan O'Grady
  * @since 0.1
  */
-class Chromosome implements Comparable<Chromosome> {
+public class Chromosome implements Comparable<Chromosome> {
     /**
      * Random generator to ensure the chaos required.
      */
@@ -36,7 +36,7 @@ class Chromosome implements Comparable<Chromosome> {
      * @param solution the solution being considered.
      * @param target the target desired.
      */
-    Chromosome(String solution, String target) {
+    public Chromosome(String solution, String target) {
         this.solution = solution.toCharArray();
         this.target = target;
         this.fitness = calculateFitness();
@@ -60,7 +60,7 @@ class Chromosome implements Comparable<Chromosome> {
      *
      * @return solution.
      */
-    char[] getSolution() {
+    public char[] getSolution() {
         return solution;
     }
 
@@ -69,7 +69,7 @@ class Chromosome implements Comparable<Chromosome> {
      *
      * @return fitness.
      */
-    int getFitness() {
+    public int getFitness() {
         return fitness;
     }
 
@@ -106,7 +106,7 @@ class Chromosome implements Comparable<Chromosome> {
      * @param target the target string being looked for.
      * @return new chromosome
      */
-    static Chromosome generateChromosome(String target) {
+    public static Chromosome generateChromosome(String target) {
         char[] arr = new char[target.length()];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (char) (RAND.nextInt(95) + 32);
@@ -120,7 +120,7 @@ class Chromosome implements Comparable<Chromosome> {
      * @param index the index at which to split the parents
      * @return crossover
      */
-    Chromosome crossover(Chromosome parent, int index) {
+    public Chromosome crossover(Chromosome parent, int index) {
         char[] arr = solution;
         char[] parArr = parent.getSolution();
         System.arraycopy(parArr, index, arr, index, arr.length - index);
@@ -132,7 +132,7 @@ class Chromosome implements Comparable<Chromosome> {
      *
      * @return mutated chromosome.
      */
-    Chromosome mutate() {
+    public Chromosome mutate() {
         char[] arr = solution;
         int index = RAND.nextInt(arr.length);
         arr[index] = (char) (RAND.nextInt(95) + 32);
