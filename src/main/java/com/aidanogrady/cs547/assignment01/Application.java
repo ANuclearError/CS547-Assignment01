@@ -24,6 +24,7 @@ public class Application {
             Properties properties = new Properties();
             try {
                 properties.load(new FileInputStream(args[0]));
+
                 Search[] searches = new Search[2];
                 searches[0] = new HillClimbingSearch();
                 searches[1] = new GeneticAlgorithmSearch();

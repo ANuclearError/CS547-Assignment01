@@ -3,7 +3,7 @@ package com.aidanogrady.cs547.assignment01;
 import java.util.Properties;
 
 /**
- * TODO: Add content
+ * Interface for various search algorithms.
  *
  * @author Aidan O'Grady
  * @since 0.0
