@@ -24,8 +24,13 @@ public class Application {
             Properties properties = new Properties();
             try {
                 properties.load(new FileInputStream(args[0]));
-                Search search = new HillClimbingSearch();
-                search.search(properties);
+                Search[] searches = new Search[2];
+                searches[0] = new HillClimbingSearch();
+                searches[1] = new GeneticAlgorithmSearch();
+                for (Search search : searches) {
+                    search.benchmark(properties);
+                    System.out.println();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

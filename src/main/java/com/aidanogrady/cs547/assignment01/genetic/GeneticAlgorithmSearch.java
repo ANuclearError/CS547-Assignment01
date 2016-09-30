@@ -31,12 +31,10 @@ public class GeneticAlgorithmSearch implements Search {
         int i = 1;
         Chromosome best = pop.getFittest();
 
-        summary(i, pop);
         while (best.getFitness() > 0) {
             pop.evolve();
             best = pop.getFittest();
             i++;
-            summary(i, pop);
         }
         return i;
     }
@@ -61,14 +59,23 @@ public class GeneticAlgorithmSearch implements Search {
         LOGGER.info("GENETIC ALGORITHM: " + runs + " RUNS");
         LOGGER.info("--------------------------------------------------------");
         int total = 0;
+        long totalTime = 0;
+
         for (int i = 1; i <= runs; i++) {
+            long start = System.currentTimeMillis();
             int result = search(properties);
+            long end = System.currentTimeMillis();
+
             total += result;
+            totalTime += (end - start);
+
             LOGGER.info("Run " + i + " completed in " + result + " generations");
         }
         int average = total / runs;
         LOGGER.info("--------------------------------------------------------");
         LOGGER.info("Average: " + average + " generations");
+        LOGGER.info("Total time: " + totalTime + "ms");
+        LOGGER.info("Average time: " + totalTime/runs + "ms");
 
         return average;
     }

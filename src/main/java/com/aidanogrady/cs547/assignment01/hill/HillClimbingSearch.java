@@ -36,6 +36,11 @@ public class HillClimbingSearch implements Search {
      */
     private List<String> subset;
 
+    /**
+     * The number of resets required to complete search.
+     */
+    private int restarts;
+
     @Override
     public int search(Properties properties) {
         target = properties.getProperty("target");
@@ -55,8 +60,7 @@ public class HillClimbingSearch implements Search {
         Chromosome next = new Chromosome(randomString, target);
 
         int i = 1;
-        summary(i, next);
-        int resets = 0;
+        restarts = 0;
         while (next.getFitness() > 0) {
             List<Chromosome> neighbourhood = neighbourhood(next, steps);
             boolean plateau = true;
@@ -68,16 +72,13 @@ public class HillClimbingSearch implements Search {
             }
 
             if (plateau) {
-                LOGGER.info("Random restart");
                 randomString = subset.get(RAND.nextInt(subset.size()));
                 next = new Chromosome(randomString, target);
                 steps++;
-                resets++;
+                restarts++;
             }
             i++;
-            summary(i, next);
         }
-        LOGGER.info("Number of resets: " + resets);
         return i;
     }
 
@@ -129,6 +130,35 @@ public class HillClimbingSearch implements Search {
 
     @Override
     public int benchmark(Properties properties) {
-        return 0;
+        int runs = Integer.parseInt(properties.getProperty("benchmark"));
+
+        LOGGER.info("HILL CLIMBING: " + runs + " RUNS");
+        LOGGER.info("--------------------------------------------------------");
+
+        int totalClimbs = 0;
+        int totalRestarts = 0;
+        long totalTime = 0;
+
+        for (int i = 1; i <= runs; i++) {
+            long start = System.currentTimeMillis();
+            int result = search(properties);
+            long end = System.currentTimeMillis();
+
+            totalClimbs += result;
+            totalRestarts += restarts;
+            totalTime += (end - start);
+
+            LOGGER.info("Run " + i + " completed in " + result + " climbs with " + restarts + " restarts");
+        }
+        int averageClimbs = totalClimbs / runs;
+        int averageRestarts = totalRestarts / runs;
+
+        LOGGER.info("--------------------------------------------------------");
+        LOGGER.info("Average no. of climbs: " + averageClimbs + " climbs");
+        LOGGER.info("Average no. of restarts: " + averageRestarts + " restarts");
+        LOGGER.info("Total time: " + totalTime + "ms");
+        LOGGER.info("Average time: " + totalTime/runs + "ms");
+
+        return averageClimbs;
     }
 }
