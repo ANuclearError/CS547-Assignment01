@@ -91,12 +91,15 @@ public class Chromosome implements Comparable<Chromosome> {
         char[] targetArray = target.toCharArray();
 
         int fitness = 0;
-
+        int mult = 0;
         int min = Math.min(solution.length, targetArray.length);
         for (int i = 0; i < min; i++) {
-            fitness += Math.abs(solution[i] - targetArray[i]);
+            int diff = Math.abs(solution[i] - targetArray[i]);
+            if (diff != 0)
+                mult++;
+            fitness += diff;
         }
-        return fitness;
+        return fitness * mult;
     }
 
     /**

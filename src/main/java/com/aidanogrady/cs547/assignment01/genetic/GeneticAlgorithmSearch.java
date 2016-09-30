@@ -41,6 +41,12 @@ public class GeneticAlgorithmSearch implements Search {
         return i;
     }
 
+    /**
+     * Logs summer of current state.
+     *
+     * @param i the generation currently being logged
+     * @param pop the population currently being worked with.
+     */
     private void summary(int i, Population pop) {
         String summary = "Generation " + i + ". ";
         summary += "Best: " + pop.getFittest() + "  Worst: " + pop.getLeastFit();

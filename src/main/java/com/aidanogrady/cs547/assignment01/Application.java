@@ -26,6 +26,7 @@ public class Application {
                 properties.load(new FileInputStream(args[0]));
                 Search search = new HillClimbingSearch();
                 search.search(properties);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
