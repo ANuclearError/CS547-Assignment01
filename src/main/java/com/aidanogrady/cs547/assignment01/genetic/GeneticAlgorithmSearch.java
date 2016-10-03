@@ -19,7 +19,6 @@ import java.util.Properties;
  */
 public class GeneticAlgorithmSearch implements Search {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneticAlgorithmSearch.class);
-    private static final Marker BENCHMARKING = MarkerFactory.getMarker("BECHMARKING");
 
     @Override
     public int search(Properties properties) {
