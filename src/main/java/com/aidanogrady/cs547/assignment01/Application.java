@@ -2,6 +2,7 @@ package com.aidanogrady.cs547.assignment01;
 
 import com.aidanogrady.cs547.assignment01.genetic.GeneticAlgorithmSearch;
 import com.aidanogrady.cs547.assignment01.hill.HillClimbingSearch;
+import com.aidanogrady.cs547.assignment01.random.RandomSearch;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,9 +26,10 @@ public class Application {
             try {
                 properties.load(new FileInputStream(args[0]));
                 if (validateProperties(properties)) {
-                    Search[] searches = new Search[2];
-                    searches[0] = new HillClimbingSearch();
-                    searches[1] = new GeneticAlgorithmSearch();
+                    Search[] searches = new Search[3];
+                    searches[0] = new RandomSearch();
+                    searches[1] = new HillClimbingSearch();
+                    searches[2] = new GeneticAlgorithmSearch();
                     for (Search search : searches) {
                         search.benchmark(properties);
                         System.out.println();

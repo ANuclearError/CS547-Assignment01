@@ -13,7 +13,7 @@ import java.util.Random;
  * @author Aidan O'Grady
  * @since 0.1
  */
-public class Population {
+class Population {
     /**
      * The population.
      */
@@ -53,8 +53,8 @@ public class Population {
      * @param tournament the desired tournament size
      * @param target the solution to be found
      */
-    public Population(int size, double elitism, double mutation, int tournament,
-                      String target) {
+    Population(int size, double elitism, double mutation, int tournament,
+               String target) {
         this.size = size;
         this.elitism = elitism;
         this.mutation = mutation;
@@ -74,7 +74,7 @@ public class Population {
      *
      * @return best solution thus far.
      */
-    public Chromosome getFittest() {
+    Chromosome getFittest() {
         return population[0];
     }
 
@@ -83,7 +83,7 @@ public class Population {
      *
      * @return average fitness.
      */
-    public double getAverageFitness() {
+    double getAverageFitness() {
         double fitness = 0.0;
         for (int i = 0; i < size; i++) {
             fitness += population[i].getFitness();
@@ -96,14 +96,14 @@ public class Population {
      *
      * @return best solution thus far.
      */
-    public Chromosome getLeastFit() {
+    Chromosome getLeastFit() {
         return population[size - 1];
     }
 
     /**
      * Evolves the current population into a new one with better fitness.
      */
-    public void evolve() {
+    void evolve() {
         // Create a subpool of the best solutions in the current population.
         int eliteSize = (int) Math.round(size * elitism);
         Chromosome[] elite = new Chromosome[eliteSize];

@@ -20,7 +20,6 @@ import java.util.*;
  */
 public class HillClimbingSearch implements Search {
     private static final Logger LOGGER = LoggerFactory.getLogger(HillClimbingSearch.class);
-    private static final Marker BENCHMARKING = MarkerFactory.getMarker("BECHMARKING");
 
     /**
      * Random generator to ensure the chaos required.
