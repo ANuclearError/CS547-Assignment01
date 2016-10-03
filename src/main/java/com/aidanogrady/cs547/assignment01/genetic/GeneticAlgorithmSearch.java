@@ -4,6 +4,8 @@ import com.aidanogrady.cs547.assignment01.Chromosome;
 import com.aidanogrady.cs547.assignment01.Search;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.util.Properties;
 
@@ -17,6 +19,7 @@ import java.util.Properties;
  */
 public class GeneticAlgorithmSearch implements Search {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneticAlgorithmSearch.class);
+    private static final Marker BENCHMARKING = MarkerFactory.getMarker("BECHMARKING");
 
     @Override
     public int search(Properties properties) {
@@ -30,11 +33,12 @@ public class GeneticAlgorithmSearch implements Search {
                 target);
         int i = 1;
         Chromosome best = pop.getFittest();
-
+        summary(i, pop);
         while (best.getFitness() > 0) {
             pop.evolve();
             best = pop.getFittest();
             i++;
+            summary(i, pop);
         }
         return i;
     }
@@ -49,7 +53,7 @@ public class GeneticAlgorithmSearch implements Search {
         String summary = "Generation " + i + ". ";
         summary += "Best: " + pop.getFittest() + "  Worst: " + pop.getLeastFit();
         summary += " Average: " + pop.getAverageFitness();
-        LOGGER.debug(summary);
+        LOGGER.info(summary);
     }
 
     @Override
@@ -57,7 +61,9 @@ public class GeneticAlgorithmSearch implements Search {
         int runs = Integer.parseInt(properties.getProperty("benchmark"));
 
         LOGGER.info("GENETIC ALGORITHM: " + runs + " RUNS");
+        System.out.println("GENETIC ALGORITHM: " + runs + " RUNS");
         LOGGER.info("--------------------------------------------------------");
+        System.out.println("--------------------------------------------------------");
         int total = 0;
         long totalTime = 0;
 
@@ -70,12 +76,18 @@ public class GeneticAlgorithmSearch implements Search {
             totalTime += (end - start);
 
             LOGGER.info("Run " + i + " completed in " + result + " generations");
+            System.out.println("Run " + i + " completed in " + result + " generations");
         }
         int average = total / runs;
+
         LOGGER.info("--------------------------------------------------------");
+        System.out.println("--------------------------------------------------------");
         LOGGER.info("Average: " + average + " generations");
+        System.out.println("Average: " + average + " generations");
         LOGGER.info("Total time: " + totalTime + "ms");
+        System.out.println("Total time: " + totalTime + "ms");
         LOGGER.info("Average time: " + totalTime/runs + "ms");
+        System.out.println("Average time: " + totalTime/runs + "ms");
 
         return average;
     }

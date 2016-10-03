@@ -5,6 +5,8 @@ import com.aidanogrady.cs547.assignment01.Search;
 import com.sun.org.apache.bcel.internal.generic.CHECKCAST;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.util.*;
 
@@ -18,6 +20,7 @@ import java.util.*;
  */
 public class HillClimbingSearch implements Search {
     private static final Logger LOGGER = LoggerFactory.getLogger(HillClimbingSearch.class);
+    private static final Marker BENCHMARKING = MarkerFactory.getMarker("BECHMARKING");
 
     /**
      * Random generator to ensure the chaos required.
@@ -54,6 +57,7 @@ public class HillClimbingSearch implements Search {
             subset.add(randomString(target.length()));
         }
         Collections.sort(subset);
+        LOGGER.info("Generated random subset of solutions");
 
         // Select random start point.
         String randomString = subset.get(RAND.nextInt(subset.size()));
@@ -61,6 +65,7 @@ public class HillClimbingSearch implements Search {
 
         int i = 1;
         restarts = 0;
+        summary(i, next);
         while (next.getFitness() > 0) {
             List<Chromosome> neighbourhood = neighbourhood(next, steps);
             boolean plateau = true;
@@ -76,8 +81,10 @@ public class HillClimbingSearch implements Search {
                 next = new Chromosome(randomString, target);
                 steps++;
                 restarts++;
+                LOGGER.debug("Restarting");
             }
             i++;
+            summary(i, next);
         }
         return i;
     }
@@ -133,7 +140,9 @@ public class HillClimbingSearch implements Search {
         int runs = Integer.parseInt(properties.getProperty("benchmark"));
 
         LOGGER.info("HILL CLIMBING: " + runs + " RUNS");
+        System.out.println("HILL CLIMBING: " + runs + " RUNS");
         LOGGER.info("--------------------------------------------------------");
+        System.out.println("--------------------------------------------------------");
 
         int totalClimbs = 0;
         int totalRestarts = 0;
@@ -148,15 +157,21 @@ public class HillClimbingSearch implements Search {
             totalRestarts += restarts;
             totalTime += (end - start);
 
-            LOGGER.info("Run " + i + " completed in " + result + " climbs with " + restarts + " restarts");
+            System.out.println("Run " + i + " completed in " + result + " climbs with " + restarts + " restarts");
         }
         int averageClimbs = totalClimbs / runs;
         int averageRestarts = totalRestarts / runs;
 
         LOGGER.info("--------------------------------------------------------");
+        System.out.println("--------------------------------------------------------");
+
+        System.out.println("Average no. of climbs: " + averageClimbs + " climbs");
         LOGGER.info("Average no. of climbs: " + averageClimbs + " climbs");
+        System.out.println("Average no. of restarts: " + averageRestarts + " restarts");
         LOGGER.info("Average no. of restarts: " + averageRestarts + " restarts");
+        System.out.println("Total time: " + totalTime + "ms");
         LOGGER.info("Total time: " + totalTime + "ms");
+        System.out.println("Average time: " + totalTime/runs + "ms");
         LOGGER.info("Average time: " + totalTime/runs + "ms");
 
         return averageClimbs;
