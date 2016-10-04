@@ -22,21 +22,9 @@ public class HillClimbingSearch implements Search {
     private static final Logger LOGGER = LoggerFactory.getLogger(HillClimbingSearch.class);
 
     /**
-     * Random generator to ensure the chaos required.
-     */
-    private static final Random RAND = new Random();
-
-    /**
      * The target of this hill climb.
      */
     private String target;
-
-    /**
-     * The subset of strings being considered. Due to maths, this prevents just
-     * giving up. Due to sorting purposes, strings must be used rather than
-     * Chromosomes.
-     */
-    private List<String> subset;
 
     /**
      * The number of resets required to complete search.
@@ -46,27 +34,15 @@ public class HillClimbingSearch implements Search {
     @Override
     public int search(Properties properties) {
         target = properties.getProperty("target");
-        int max = Integer.parseInt(properties.getProperty("hill.size"));
-        int steps = Integer.parseInt(properties.getProperty("hill.steps"));
-
-        // Generate subset.
-        subset = new ArrayList<>();
-        subset.add(target); // Guarantee the target is in the subset.
-        for (int i = 0; i < max; i++) {
-            subset.add(randomString(target.length()));
-        }
-        Collections.sort(subset);
-        LOGGER.info("Generated random subset of solutions");
 
         // Select random start point.
-        String randomString = subset.get(RAND.nextInt(subset.size()));
-        Chromosome next = new Chromosome(randomString, target);
+        Chromosome next = Chromosome.generateChromosome(target);
 
         int i = 1;
         restarts = 0;
         summary(i, next);
         while (next.getFitness() > 0) {
-            List<Chromosome> neighbourhood = neighbourhood(next, steps);
+            List<Chromosome> neighbourhood = neighbourhood(next);
             boolean plateau = true;
             for (Chromosome c : neighbourhood) {
                 if (c.getFitness() < next.getFitness()) {
@@ -76,9 +52,7 @@ public class HillClimbingSearch implements Search {
             }
 
             if (plateau) {
-                randomString = subset.get(RAND.nextInt(subset.size()));
-                next = new Chromosome(randomString, target);
-                steps++;
+                next = Chromosome.generateChromosome(target);
                 restarts++;
                 LOGGER.info("Restart number " + restarts);
             }
@@ -99,37 +73,24 @@ public class HillClimbingSearch implements Search {
     }
 
     /**
-     * Generates a random string of the given length.
-     *
-     * @param length the length of the string to generate.
-     * @return random string.
-     */
-    private String randomString(int length) {
-        char[] arr = new char[length];
-        for (int i = 0; i < length; i++) {
-            arr[i] = (char) (RAND.nextInt(95) + 32);
-        }
-        return String.valueOf(arr);
-    }
-
-    /**
      * Returns the neighbouring strings of the given solution within the given
      * steps.
      *
      * @param chromosome the current
-     * @param steps the number of steps that can be taken per climb
      * @return neighbourhood
      */
-    private List<Chromosome> neighbourhood(Chromosome chromosome, int steps) {
+    private List<Chromosome> neighbourhood(Chromosome chromosome) {
         List<Chromosome> neighbourhood = new ArrayList<>();
-        int index = subset.indexOf(String.valueOf(chromosome.getSolution()));
-        for (int i = 0; i < steps; i++) {
-            int posInd = (index + i) % subset.size();
-            int negInd = index - i;
-            if (negInd < 0)
-                negInd = subset.size() + negInd;
-            neighbourhood.add(new Chromosome(subset.get(posInd), target));
-            neighbourhood.add(new Chromosome(subset.get(negInd), target));
+
+        // This neighbourhood guarantees an improvement will be found.
+        int length = chromosome.getSolution().length;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < 95; j++) {
+                char[] arr = new char[length];
+                System.arraycopy(chromosome.getSolution(), 0, arr, 0, arr.length);
+                arr[i] = (char) (j + 32);
+                neighbourhood.add(new Chromosome(arr, target));
+            }
         }
         return neighbourhood;
     }
@@ -172,5 +133,17 @@ public class HillClimbingSearch implements Search {
         LOGGER.info("Average time: " + totalTime/runs + "ms");
 
         return averageClimbs;
+    }
+
+    public static void main(String[] args) {
+        char[] orig = {'H', 'i', '!'};
+        for (int i = 0; i < orig.length; i++) {
+            for (int j = 0; j < 95; j++) {
+                char[] arr = new char[orig.length];
+                System.arraycopy(orig, 0, arr, 0, arr.length);
+                arr[i] = (char) (j + 32);
+                System.out.println(arr);
+            }
+        }
     }
 }
