@@ -61,12 +61,11 @@ public class GeneticAlgorithmSearch implements Search {
 
         LOGGER.info("GENETIC ALGORITHM: " + runs + " RUNS");
         System.out.println("GENETIC ALGORITHM: " + runs + " RUNS");
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
         int total = 0;
         long totalTime = 0;
 
         for (int i = 1; i <= runs; i++) {
+            LOGGER.info("Run " + i + " starting");
             long start = System.currentTimeMillis();
             int result = search(properties);
             long end = System.currentTimeMillis();
@@ -75,12 +74,10 @@ public class GeneticAlgorithmSearch implements Search {
             totalTime += (end - start);
 
             LOGGER.info("Run " + i + " completed in " + result + " generations");
-            System.out.println("Run " + i + " completed in " + result + " generations");
+            System.out.println("\tRun " + i + " completed in " + result + " generations");
         }
         int average = total / runs;
 
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
         LOGGER.info("Average: " + average + " generations");
         System.out.println("Average: " + average + " generations");
         LOGGER.info("Total time: " + totalTime + "ms");

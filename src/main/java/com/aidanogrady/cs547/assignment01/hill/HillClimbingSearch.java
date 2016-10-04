@@ -80,7 +80,7 @@ public class HillClimbingSearch implements Search {
                 next = new Chromosome(randomString, target);
                 steps++;
                 restarts++;
-                LOGGER.debug("Restarting");
+                LOGGER.info("Restart number " + restarts);
             }
             i++;
             summary(i, next);
@@ -140,14 +140,13 @@ public class HillClimbingSearch implements Search {
 
         LOGGER.info("HILL CLIMBING: " + runs + " RUNS");
         System.out.println("HILL CLIMBING: " + runs + " RUNS");
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
 
         int totalClimbs = 0;
         int totalRestarts = 0;
         long totalTime = 0;
 
         for (int i = 1; i <= runs; i++) {
+            LOGGER.info("Run " + i + " starting");
             long start = System.currentTimeMillis();
             int result = search(properties);
             long end = System.currentTimeMillis();
@@ -156,13 +155,12 @@ public class HillClimbingSearch implements Search {
             totalRestarts += restarts;
             totalTime += (end - start);
 
-            System.out.println("Run " + i + " completed in " + result + " climbs with " + restarts + " restarts");
+            LOGGER.info("Run " + i + " completed in " + result + " climbs with " + restarts + " restarts");
+            System.out.println("\tRun " + i + " completed in " + result + " climbs with " + restarts + " restarts");
         }
         int averageClimbs = totalClimbs / runs;
         int averageRestarts = totalRestarts / runs;
 
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
 
         System.out.println("Average no. of climbs: " + averageClimbs + " climbs");
         LOGGER.info("Average no. of climbs: " + averageClimbs + " climbs");

@@ -15,7 +15,7 @@ import java.util.Random;
  * @since 0.0
  */
 public class RandomSearch implements Search {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HillClimbingSearch.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RandomSearch.class);
 
     /**
      * Random generator to ensure the chaos required.
@@ -58,13 +58,12 @@ public class RandomSearch implements Search {
 
         LOGGER.info("RANDOM SEARCH: " + runs + " RUNS");
         System.out.println("RANDOM SEARCH: " + runs + " RUNS");
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
 
         int successes = 0;
         long totalTime = 0;
 
         for (int i = 1; i <= runs; i++) {
+            LOGGER.info("Run " + i + " starting");
             long start = System.currentTimeMillis();
             int result = search(properties);
             long end = System.currentTimeMillis();
@@ -72,10 +71,10 @@ public class RandomSearch implements Search {
             if (result > 0) {
                 successes++;
                 LOGGER.info("Run " + i + " succeeded in " + result+ " attempts");
-                System.out.println("Run " + i + " succeeded in " + result+ " attempts");
+                System.out.println("\tRun " + i + " succeeded in " + result+ " attempts");
             } else {
                 LOGGER.info("Run " + i + " failed to find target in limit");
-                System.out.println("Run " + i + " failed to find target in limit");
+                System.out.println("\tRun " + i + " failed to find target in limit");
             }
             totalTime += (end - start);
         }
@@ -83,8 +82,6 @@ public class RandomSearch implements Search {
         double successRate = ((double) successes / (double) runs) * 100;
         successRate = Math.round(successRate * 100) / 100;
 
-        LOGGER.info("--------------------------------------------------------");
-        System.out.println("--------------------------------------------------------");
         LOGGER.info("Number of successes: " + successes);
         System.out.println("Number of successes: " + successes);
         LOGGER.info("Success rate: " + successRate);
