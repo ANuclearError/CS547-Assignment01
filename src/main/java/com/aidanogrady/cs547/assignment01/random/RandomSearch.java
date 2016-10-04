@@ -1,5 +1,6 @@
 package com.aidanogrady.cs547.assignment01.random;
 
+import com.aidanogrady.cs547.assignment01.Chromosome;
 import com.aidanogrady.cs547.assignment01.Search;
 import com.aidanogrady.cs547.assignment01.hill.HillClimbingSearch;
 import org.slf4j.Logger;
@@ -29,12 +30,15 @@ public class RandomSearch implements Search {
 
         int length = target.length();
 
+        String next = "";
         for (int i = 0; i < limit; i++) {
-            String next = generateString(length);
-            if (next.equals(target))
+            next = generateString(length);
+            if (next.equals(target)) {
+                LOGGER.info("Attempt " + i + " found! " + new Chromosome(next, target));
                 return i;
+            }
         }
-
+        LOGGER.info("Searched halted on: " + new Chromosome(next, target));
         return -1;
     }
 

@@ -49,13 +49,11 @@ public class Application {
      * @return valid
      */
     private static boolean validateProperties(Properties properties) {
-        String[] props = {"target", "benchmark", "hill.steps", "hill.size",
-                "ga.population", "ga.elitism", "ga.mutation", "ga.tournament"
+        String[] props = {"target", "benchmark", "ga.population", "ga.elitism",
+                "ga.mutation", "ga.tournament"
         };
 
-        String[] types = {"string", "int", "int", "int", "int", "double",
-                "double", "int"
-        };
+        String[] types = {"string", "int", "int", "double", "double", "int"};
 
         for (int i = 0; i < props.length; i++) {
             String prop = props[i];

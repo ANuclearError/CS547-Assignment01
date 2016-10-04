@@ -121,9 +121,12 @@ class Population {
             if (random.nextFloat() < mutation) {
                 nextGen[i] = nextGen[i].mutate();
             }
-            nextGen[++i] = father.crossover(mother, offset);
-            if (random.nextFloat() < mutation) {
-                nextGen[i] = nextGen[i].mutate();
+
+            if (i < (size - 2)) { // Handle odd pop size.
+                nextGen[++i] = father.crossover(mother, offset);
+                if (random.nextFloat() < mutation) {
+                    nextGen[i] = nextGen[i].mutate();
+                }
             }
         }
         Arrays.sort(nextGen);
