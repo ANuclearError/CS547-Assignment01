@@ -24,6 +24,7 @@ Strathclyde, Glasgow.
  * benchmark: The umber of times to run each search/
  * random.limit: The number of attempts to generate a random string
  before giving up.
+ * hillclimb.steps: The number of steps the algorithm takes per climb.
  * ga.population: The size of population in genetic algorithm.
  * ga.elitism: (Double from 0 to 1) The subset of top chromosomes to accept as
 parents.
@@ -31,3 +32,6 @@ parents.
  * ga.tournament: Number of chromosomes in tournament selection.
 
 
+## Output
+The console will display a summary of the results in each search. The ```log```
+directory will contain detailed results of each search.

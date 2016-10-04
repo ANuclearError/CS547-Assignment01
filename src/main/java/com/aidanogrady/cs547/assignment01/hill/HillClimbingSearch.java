@@ -34,6 +34,7 @@ public class HillClimbingSearch implements Search {
     @Override
     public int search(Properties properties) {
         target = properties.getProperty("target");
+        int steps = Integer.parseInt(properties.getProperty("hillclimb.steps"));
 
         // Select random start point.
         Chromosome next = Chromosome.generateChromosome(target);
@@ -42,7 +43,7 @@ public class HillClimbingSearch implements Search {
         restarts = 0;
         summary(i, next);
         while (next.getFitness() > 0) {
-            List<Chromosome> neighbourhood = neighbourhood(next);
+            List<Chromosome> neighbourhood = neighbourhood(next, steps);
             boolean plateau = true;
             for (Chromosome c : neighbourhood) {
                 if (c.getFitness() < next.getFitness()) {
@@ -79,16 +80,23 @@ public class HillClimbingSearch implements Search {
      * @param chromosome the current
      * @return neighbourhood
      */
-    private List<Chromosome> neighbourhood(Chromosome chromosome) {
+    private List<Chromosome> neighbourhood(Chromosome chromosome, int steps) {
         List<Chromosome> neighbourhood = new ArrayList<>();
 
         // This neighbourhood guarantees an improvement will be found.
-        int length = chromosome.getSolution().length;
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < 95; j++) {
-                char[] arr = new char[length];
-                System.arraycopy(chromosome.getSolution(), 0, arr, 0, arr.length);
-                arr[i] = (char) (j + 32);
+        char[] orig = chromosome.getSolution();
+        for (int i = 0; i < orig.length; i++) {
+            for (int j = 1; j < steps; j++) {
+                char[] arr = new char[orig.length];
+
+                System.arraycopy(orig, 0, arr, 0, arr.length);
+
+                int val = (orig[i] - 32 - j) % 94 + 32;
+                arr[i] = (char) val;
+                neighbourhood.add(new Chromosome(arr, target));
+
+                val = (orig[i] - 32 + j) % 95 + 32;
+                arr[i] = (char) val;
                 neighbourhood.add(new Chromosome(arr, target));
             }
         }

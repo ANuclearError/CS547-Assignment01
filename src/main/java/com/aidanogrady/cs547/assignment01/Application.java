@@ -35,7 +35,6 @@ public class Application {
                         System.out.println();
                     }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -49,11 +48,11 @@ public class Application {
      * @return valid
      */
     private static boolean validateProperties(Properties properties) {
-        String[] props = {"target", "benchmark", "ga.population", "ga.elitism",
+        String[] props = {"target", "benchmark", "hillclimb.steps", "ga.population", "ga.elitism",
                 "ga.mutation", "ga.tournament"
         };
 
-        String[] types = {"string", "int", "int", "double", "double", "int"};
+        String[] types = {"string", "int", "int", "int", "double", "double", "int"};
 
         for (int i = 0; i < props.length; i++) {
             String prop = props[i];
